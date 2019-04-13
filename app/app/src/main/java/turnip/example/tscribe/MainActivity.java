@@ -18,6 +18,9 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicHeader;
 import org.apache.http.params.HttpConnectionParams;
+import org.java_websocket.client.WebSocketClient;
+import org.java_websocket.drafts.Draft;
+import org.java_websocket.handshake.ServerHandshake;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -31,6 +34,7 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.UnknownHostException;
+import java.nio.ByteBuffer;
 
 import static java.net.Proxy.Type.HTTP;
 
@@ -39,6 +43,7 @@ public class MainActivity extends AppCompatActivity implements Main{
     private static final String SERVER_URL = "http://tscribe-precociouslydigital.c9users.io:8080/call";
     private CallFragment callFragment;
     private MessageFragment messageFragment;
+    private WebSocketClient client;
 
 
     @Override
@@ -89,9 +94,12 @@ public class MainActivity extends AppCompatActivity implements Main{
                 HttpResponse response = httpClient.execute(postMethod);
                 HttpEntity entity = response.getEntity();
                 String result = getStringFromStream(entity.getContent());
-
-
                 Log.i(TAG, "Result: " + result );
+
+                client = new EmptyClient(new URI(result));
+                client.connect();
+
+
             } catch (ClientProtocolException e) {
                 e.printStackTrace();
                 Log.e(TAG, "ClientProtocol");
@@ -123,7 +131,7 @@ public class MainActivity extends AppCompatActivity implements Main{
             public void run() {
                 try {
                     connectToServer("+14254999057", "+14254350494", "My tooth hurts");
-                    MessageFragment messageFragment = new MessageFragment();
+                    messageFragment = new MessageFragment();
                     FragmentTransaction ft = getFragmentManager().beginTransaction();
                     ft.replace(R.id.contentFragment, messageFragment);
                     ft.commit();
@@ -137,10 +145,50 @@ public class MainActivity extends AppCompatActivity implements Main{
     }
 
     public void disconnect() {
-        CallFragment callFragment = new CallFragment();
+        callFragment = new CallFragment();
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         ft.replace(R.id.contentFragment, callFragment);
         ft.commit();
+    }
+
+    public void send(String message) {
+        client.send(message);
+    }
+
+    public class EmptyClient extends WebSocketClient {
+
+        public EmptyClient(URI serverUri, Draft draft) {
+            super(serverUri, draft);
+        }
+
+        public EmptyClient(URI serverURI) {
+            super(serverURI);
+        }
+
+        @Override
+        public void onOpen(ServerHandshake handshakedata) {
+            Log.e(TAG, "New connection opened");
+        }
+
+        @Override
+        public void onClose(int code, String reason, boolean remote) {
+            System.out.println("closed with exit code " + code + " additional info: " + reason);
+        }
+
+        @Override
+        public void onMessage(String message) {
+            System.out.println("received message: " + message);
+        }
+
+        @Override
+        public void onMessage(ByteBuffer message) {
+            System.out.println("received ByteBuffer");
+        }
+
+        @Override
+        public void onError(Exception ex) {
+            System.err.println("an error occurred:" + ex);
+        }
     }
 
 }
