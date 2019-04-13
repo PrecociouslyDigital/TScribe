@@ -36,7 +36,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/phoneNum"
+        android:id="@+id/phone_num"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -67,7 +67,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:text="Call to:"
-        app:layout_constraintEnd_toStartOf="@+id/phoneNum"
+        app:layout_constraintEnd_toStartOf="@+id/phone_num"
         app:layout_constraintHorizontal_bias="0.55"
         app:layout_constraintStart_toStartOf="parent"
         tools:layout_editor_absoluteY="197dp" />
