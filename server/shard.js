@@ -26,7 +26,6 @@ function processWsMessage(msg){
     
 }
 function closeSession(){
-    if()
 }
 
 const mainLoop = (msg, redirect='/prompt')=>`
