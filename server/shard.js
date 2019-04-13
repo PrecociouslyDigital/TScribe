@@ -1,4 +1,5 @@
 const [callNumber, userNumber, opening, url, port] = process.argv;
+const app = require('express')();
 const expressWs = require('express-ws')(app);
 
 var wsSingleton;
