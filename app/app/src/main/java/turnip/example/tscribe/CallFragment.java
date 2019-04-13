@@ -10,11 +10,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 
 public class CallFragment extends Fragment {
     private static final String TAG = "CallFragment";
     private Main main;
-    private Button call;
+    private ImageButton call;
     private EditText phone;
     private EditText message;
 
