@@ -1,7 +1,5 @@
 package turnip.example.tscribe;
 
-import android.support.v7.widget.AppCompatImageView;
-import android.support.v7.app.AppCompatActivity;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
@@ -23,7 +21,7 @@ public class RachelActivity extends Activity{
         call = (Button) findViewById(R.id.CallButton);
         call.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                mEdit   = (EditText)findViewById(R.id.phoneNum);
+                mEdit   = (EditText)findViewById(R.id.phone_num);
                 mText = (TextView)findViewById(R.id.text);
                 String output = mEdit.getText().toString();
             }

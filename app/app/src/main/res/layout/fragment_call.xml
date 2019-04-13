@@ -41,7 +41,7 @@
         android:background="#CCCCCC"
         android:ems="10"
         android:hint="First message here"
-        android:inputType="textLongMessage"
+        android:inputType="text"
         android:singleLine="false"
         app:layout_constraintBottom_toTopOf="@+id/button"
         app:layout_constraintEnd_toEndOf="parent"
