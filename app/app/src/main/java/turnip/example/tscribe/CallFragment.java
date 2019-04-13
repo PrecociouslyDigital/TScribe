@@ -41,7 +41,7 @@ public class CallFragment extends Fragment {
                 String msg = message.getText().toString();
             }
         });
-        
+
         /*
         final Button button = findViewById(R.id.button_id);
          button.setOnClickListener(new View.OnClickListener() {
