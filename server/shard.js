@@ -18,15 +18,11 @@ app.ws('/', function(ws, req) {
     // TODO: Token Auth;
     wsSingleton = ws;
     const call = await client.calls
-      .create({
+        .create({
          url: `http://${url}/start`,
          to: callNumber,
          from: '+19729967143'
-       })
-    wsSingleton.send(JSON.stringify({
-        type:"event",
-        event:"connect",
-    }));
+        });
     wsSingleton.on('message', (msg) => wsProcessQueue.push(processWsMessage(JSON.parse(msg))));
     wsSingleton.on('close', closeSession);
 });
@@ -35,7 +31,11 @@ app.get('/prompt', (req, res) => {
     wsSingle
 });
 app.get('/start', (req, res) => {
-
+    wsSingleton.send(JSON.stringify({
+        type:"event",
+        event:"connect",
+    }));
+    res.send(start(opening));
 });
 app.get('/partial', (req, res) => wsSingleton)
 
