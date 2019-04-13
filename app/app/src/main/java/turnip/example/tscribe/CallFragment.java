@@ -45,7 +45,6 @@ public class CallFragment extends Fragment {
                     number = phone.getText().toString();
                     msg = message.getText().toString();
                 }
-
             }
         });
 
