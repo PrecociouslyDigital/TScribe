@@ -1,6 +1,6 @@
 const express = require('express');
 const cluster = require('cluster');
-const { execFile } = require('child_process');
+const { exec } = require('child_process');
 const app = express();
 const port = 3000;
 const canonHost = "10.154.8.240";
