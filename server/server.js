@@ -12,7 +12,7 @@ app.use(express.json({
     type:()=>true
 }))
 
-app.post('/call', (req, res) => {
+app.post('/call', async (req, res) => {
     console.log("Got request");
     console.log(req.body);
     await createShard(req.body, {
