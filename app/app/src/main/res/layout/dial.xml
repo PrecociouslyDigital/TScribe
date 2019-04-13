@@ -44,4 +44,12 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.469"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TSCRIBE"
+        tools:layout_editor_absoluteX="180dp"
+        tools:layout_editor_absoluteY="36dp" />
 </android.support.constraint.ConstraintLayout>
