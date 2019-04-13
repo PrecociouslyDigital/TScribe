@@ -5,14 +5,13 @@ const accountSid = process.env["TWILIO_SID"];
 const authToken = process.env["TWILIO_TOKEN"];
 const client = require('twilio')(accountSid, authToken);
 
-
-
-
 var wsSingleton;
 
-var wsProcessQueue = [];
+var clientMsgs = [];
 
 var startingMessage;
+
+var die = false;
 
 app.ws('/', function(ws, req) {
     // TODO: Token Auth;
@@ -23,12 +22,30 @@ app.ws('/', function(ws, req) {
          to: callNumber,
          from: '+19729967143'
         });
-    wsSingleton.on('message', (msg) => wsProcessQueue.push(processWsMessage(JSON.parse(msg))));
+    wsSingleton.on('message', (msgRaw) => {
+        const msg = JSON.parse(msgRaw);
+        if(msg.type==="event"){
+            if(msg.event === "disconnect"){
+                die = true;
+            }
+        }else if(msg.type === "clientMessage"){
+            clientMsgs.push(msg.text);
+        }
+    });
     wsSingleton.on('close', closeSession);
 });
 
 app.get('/prompt', (req, res) => {
-    wsSingle
+    if(req.query.CallStatus === "completed" || die){
+        closeSession();
+        res.send(end());
+        return;
+    }
+    wsSingleton.send(JSON.stringify({
+        type:"serverMessage",
+        text: req.query.SpeechResult
+    }));
+    res.send(mainLoop(clientMsgs.join('\n')))
 });
 app.get('/start', (req, res) => {
     wsSingleton.send(JSON.stringify({
@@ -37,11 +54,11 @@ app.get('/start', (req, res) => {
     }));
     res.send(start(opening));
 });
-app.get('/partial', (req, res) => wsSingleton)
+app.get('/partial', (req, res) => wsSingleton.send(JSON.stringify({
+    type:"partialMessage",
+    text:req.query.UnstableSpeechResult,
+})));
 
-function processWsMessage(msg){
-    
-}
 function closeSession(){
     if(wsSingleton.readyState === 1){
         wsSingleton.send(JSON.stringify({
@@ -51,6 +68,7 @@ function closeSession(){
         }));
         wsSingleton.close();
     }
+    server.close();
 }
 
 const mainLoop = (msg, redirect='/prompt')=>`
