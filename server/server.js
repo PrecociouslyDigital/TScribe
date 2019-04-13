@@ -3,7 +3,7 @@ const cluster = require('cluster');
 const { execFile } = require('child_process');
 const app = express();
 const port = 3000;
-const canonHost = "tscribe.crabdance.com";
+const canonHost = "10.154.8.240";
 
 var shardIncrement = 1;
 
