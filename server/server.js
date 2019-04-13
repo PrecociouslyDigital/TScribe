@@ -21,7 +21,7 @@ app.post('/call', async (req, res) => {
         token: "idk",
     });
     console.log(`spun up shard at ${canonHost}:${port + shardIncrement}`);
-    res(JSON.stringify(`ws://${canonHost}:${port + shardIncrement}`));
+    res.json(`ws://${canonHost}:${port + shardIncrement}`);
 })
 
 app.listen(port, () => console.log(`Master Server listening on port ${port}!`))
