@@ -39,8 +39,12 @@ public class CallFragment extends Fragment {
             public void onClick(View view) {
                 phone = view.findViewById(R.id.phone_num);
                 message = view.findViewById(R.id.msg);
-                String number = phone.getText().toString();
-                String msg = message.getText().toString();
+                String number;
+                String msg;
+                if (phone.getText() != null && message.getText() != null) {
+                    number = phone.getText().toString();
+                    msg = message.getText().toString();
+                }
 
             }
         });
