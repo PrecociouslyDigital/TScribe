@@ -20,7 +20,7 @@ app.get('/prompt', (req, res) => {
 app.get('/start', (req, res) => {
 
 });
-app.get('/partial', (req, res) => wsSingleton))
+app.get('/partial', (req, res) => wsSingleton)
 
 function processWsMessage(msg){
     
@@ -51,3 +51,6 @@ const end = `<?xml version="1.0" encoding="UTF-8"?>
     <Say>User has hung up. Goodbye!</Say>
     <Hangup/>
 </Response>`
+
+
+app.listen(port, () => console.log(`shard listening on port ${port}!`))
