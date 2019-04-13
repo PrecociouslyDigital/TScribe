@@ -125,12 +125,14 @@ public class MainActivity extends AppCompatActivity implements Main{
 
 
 
-    public void connect() {
+    public void connect(String callNum, String opening) {
+        final String callN = callNum;
+        final String op = opening;
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
                 try {
-                    connectToServer("+14254999057", "+14254350494", "My tooth hurts");
+                    connectToServer("+14254999057", "+1" + callN, op);
                     messageFragment = new MessageFragment();
                     FragmentTransaction ft = getFragmentManager().beginTransaction();
                     ft.replace(R.id.contentFragment, messageFragment);
