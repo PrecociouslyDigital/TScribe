@@ -27,7 +27,7 @@ app.post('/call', async (req, res) => {
 app.listen(port, () => console.log(`Master Server listening on port ${port}!`))
 
 function createShard({callNumber, userNumber, opening}, {host, port, token}){
-    const child = execFile('./shard.js', [callNumber, userNumber, opening, host, port, token], (error, stdout, stderr) => {
+    const child = execFile('node shard.js', [callNumber, userNumber, opening, host, port, token], (error, stdout, stderr) => {
         if (error) {
             throw error;
         }
