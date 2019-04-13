@@ -2,8 +2,8 @@ const express = require('express');
 const cluster = require('cluster');
 const { exec } = require('child_process');
 const app = express();
-const port = 3000;
-const canonHost = "10.154.8.240";
+const port = 8080;
+const canonHost = "tscribe-precociouslydigital.c9.io";
 
 var shardIncrement = 1;
 
