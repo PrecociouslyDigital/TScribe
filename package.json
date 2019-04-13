@@ -1,0 +1,10 @@
+{
+  "name": "TScribe",
+  "version": "0.1.0",
+  "description": "Text-To-Speech and Speech-To-Text for phone calls",
+  "main": "server.js",
+  "repository": "git@github.com:PrecociouslyDigital/TScribe.git",
+  "author": "precociouslydigital <fellfromatree@gmail.com>",
+  "license": "MIT",
+  "private": false
+}
