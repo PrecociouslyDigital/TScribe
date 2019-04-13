@@ -29,12 +29,12 @@ public class MessageFragment extends Fragment {
         Log.i(TAG, "MessageFragment: OnCreate called");
         View view = inflater.inflate(R.layout.fragment_message, container, false);
 
-        Button disconnectButton = view.findViewById(R.id.disconnectButton);
-        disconnectButton.setOnClickListener(new View.OnClickListener() {
+        //Button disconnectButton = view.findViewById(R.id.disconnectButton);
+        /*disconnectButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 main.disconnect();
             }
-        });
+        });*/
 
         return view;
     }
