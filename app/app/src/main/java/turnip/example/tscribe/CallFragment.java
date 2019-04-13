@@ -34,16 +34,19 @@ public class CallFragment extends Fragment {
         Log.i(TAG, "CallFragment: OnCreate called");
         View view = inflater.inflate(R.layout.fragment_call, container, false);
 
+
+        phone = view.findViewById(R.id.phone_num);
+        message = view.findViewById(R.id.msg);
         call = view.findViewById(R.id.button);
         call.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                phone = view.findViewById(R.id.phone_num);
-                message = view.findViewById(R.id.msg);
                 String number;
                 String msg;
                 if (phone.getText() != null && message.getText() != null) {
                     number = phone.getText().toString();
                     msg = message.getText().toString();
+                    Log.i(TAG, number);
+                    Log.i(TAG, msg);
                 }
             }
         });
