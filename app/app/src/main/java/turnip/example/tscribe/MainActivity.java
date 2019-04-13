@@ -89,6 +89,8 @@ public class MainActivity extends AppCompatActivity implements Main{
                 HttpResponse response = httpClient.execute(postMethod);
                 HttpEntity entity = response.getEntity();
                 String result = getStringFromStream(entity.getContent());
+
+
                 Log.i(TAG, "Result: " + result );
             } catch (ClientProtocolException e) {
                 e.printStackTrace();
