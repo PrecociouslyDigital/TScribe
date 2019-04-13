@@ -35,12 +35,20 @@ public class CallFragment extends Fragment {
         call = view.findViewById(R.id.button);
         call.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                phone = view.findViewById(R.id.phoneNum);
+                phone = view.findViewById(R.id.phone_num);
                 message = view.findViewById(R.id.msg);
                 String number = phone.getText().toString();
                 String msg = message.getText().toString();
             }
         });
+        
+        /*
+        final Button button = findViewById(R.id.button_id);
+         button.setOnClickListener(new View.OnClickListener() {
+             public void onClick(View v) {
+                 // Code here executes on main thread after user presses button
+
+         */
 
 
         /*Button callButton = view.findViewById(R.id.callButton);
