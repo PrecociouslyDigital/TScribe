@@ -17,11 +17,12 @@ app.post('/call', async (req, res) => {
     console.log(req.body);
     await createShard(req.body, {
         host: canonHost,
-        port: port+(shardIncrement++),
+        port: port+shardIncrement,
         token: "idk",
     });
     console.log(`spun up shard at ${canonHost}:${port + shardIncrement}`);
     res.json(`ws://${canonHost}:${port + shardIncrement}`);
+    shardIncrement++;
 })
 
 app.listen(port, () => console.log(`Master Server listening on port ${port}!`))
