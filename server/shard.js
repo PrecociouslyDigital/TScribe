@@ -1,4 +1,4 @@
-const [callNumber, userNumber, opening, url, port] = process.argv;
+const [node, appName, callNumber, userNumber, opening, url, port] = process.argv;
 const app = require('express')();
 const expressWs = require('express-ws')(app);
 const accountSid = process.env["TWILIO_SID"];
@@ -7,18 +7,30 @@ const client = require('twilio')(accountSid, authToken);
 
 var wsSingleton;
 
-var clientMsgs = [];
+var sendQueue = [];
+function send(msg){
+    sendQueue.push(msg);
+    if(wsSingle.readyState === 1){
+        sendQueue.map((i) => wsSingleton.send(i))
+        sendQueue = [];
+    }else{
+    }
+    
+}
+
+var clientMsgs = ["sample ", "message", "owo"];
 
 var startingMessage;
 
 var die = false;
 
-app.ws('/', function(ws, req) {
+app.ws('/', async function(ws, req) {
     // TODO: Token Auth;
     wsSingleton = ws;
     const call = await client.calls
         .create({
-         url: `http://${url}/start`,
+            method:"GET",
+         url: `http://${url}:${port}/start`,
          to: callNumber,
          from: '+19729967143'
         });
@@ -29,7 +41,7 @@ app.ws('/', function(ws, req) {
                 die = true;
             }
         }else if(msg.type === "clientMessage"){
-            clientMsgs.push(msg.text);
+            send(msg.text);
         }
     });
     wsSingleton.on('close', closeSession);
@@ -52,14 +64,16 @@ app.get('/start', (req, res) => {
         type:"event",
         event:"connect",
     }));
+    console.log(`Staring twilio at ${url}:${port}`);
     res.send(start(opening));
 });
-app.get('/partial', (req, res) => wsSingleton.send(JSON.stringify({
+app.get('/partial', (req, res) => {});/*wsSingleton.send(JSON.stringify({
     type:"partialMessage",
     text:req.query.UnstableSpeechResult,
-})));
+})));*/
 
 function closeSession(){
+    console.log("closing session");
     if(wsSingleton.readyState === 1){
         wsSingleton.send(JSON.stringify({
             type:"event",
@@ -71,17 +85,13 @@ function closeSession(){
     server.close();
 }
 
-const mainLoop = (msg, redirect='/prompt')=>`
-<?xml version="1.0" encoding="UTF-8"?>
+const mainLoop = (msg, redirect='/prompt')=>`<?xml version="1.0" encoding="UTF-8"?>
 <Response>
-    <Gather action="${redirect}" method="GET" input="speech" actionOnEmptyResult=true>
-        <Say>
-            ${msg}
-        </Say>
+    <Say>${msg}</Say>
+    <Gather action="${redirect}" method="GET" input="speech" actionOnEmptyResult="true">
     </Gather>
 </Response>`;
-const start = (say, redirect='/prompt')=>`
-<?xml version="1.0" encoding="UTF-8"?>
+const start = (say, redirect='/prompt')=>`<?xml version="1.0" encoding="UTF-8"?>
 <Response>
     <Say>${say}</Say>
     <Redirect method='GET'>${redirect}</Redirect>

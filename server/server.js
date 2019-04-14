@@ -3,14 +3,14 @@ const cluster = require('cluster');
 const { exec } = require('child_process');
 const app = express();
 const port = 8080;
-const canonHost = "tscribe-precociouslydigital.c9.io";
+const canonHost = "tscribe-precociouslydigital.c9users.io";
 
 var shardIncrement = 1;
 
 app.use(express.json({
     strict: false,
     type:()=>true
-}))
+}));
 
 app.post('/call', async (req, res) => {
     console.log("Got request");
